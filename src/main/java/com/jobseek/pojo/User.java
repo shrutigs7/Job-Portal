@@ -13,13 +13,13 @@ public class User {
 
     @Id
     @Column(name = "user_id")
-    public long userId;
-    public String password;
-    public String email;
+    private long userId;
+    private String password;
+    private String email;
     @Enumerated(value = EnumType.STRING)
-    public Role role;
+    private Role role;
     @Column(name = "is_active")
-    public boolean isActive;
+    private boolean isActive;
 
     public User(long userId, String password, String email, Role role) {
         this.userId = userId;
