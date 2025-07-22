@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Recruiters {
+public class Recruiter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +32,7 @@ public class Recruiters {
     private Company company;
 
 
-    public Recruiters(String name, String mobNumber, String title) {
+    public Recruiter(String name, String mobNumber, String title) {
         Name = name;
         this.mobNumber = mobNumber;
         this.title = title;

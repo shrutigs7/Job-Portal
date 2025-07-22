@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.temporal.ChronoUnit;
 
 @Entity
@@ -38,7 +39,9 @@ public class Experience {
     @PreUpdate
     public void calcTotalExperience(){
         if(startDate != null && endDate != null){
-            this.expInYears= ChronoUnit.YEARS.between(startDate,endDate);
+            int years = Period.between(startDate, endDate).getYears();
+            int months = Period.between(startDate, endDate).getMonths();
+            this.expInYears = years + (months / 12.0f);
         }
         else {
             this.expInYears=0L;

@@ -21,6 +21,16 @@ public class User {
     @Column(name = "is_active")
     private boolean isActive;
 
+    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
+    private Candidate candidate;
+
+    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
+    private Admin admin;
+
+    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
+    private Recruiter recruiter;
+
+
     public User(long userId, String password, String email, Role role) {
         this.userId = userId;
         this.password = password;
