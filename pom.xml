@@ -72,6 +72,11 @@
 			<artifactId>spring-restdocs-mockmvc</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<version>9.3.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -111,6 +116,13 @@
 <!--						<artifactId>spring-restdocs-asciidoctor</artifactId>-->
 <!--						<version>${spring-restdocs.version}</version>-->
 <!--					</dependency>-->
+<!--					<dependency>-->
+<!--						<groupId>com.mysql</groupId>-->
+<!--						<artifactId>mysql-connector-j</artifactId>-->
+<!--						<scope>runtime</scope>-->
+<!--					</dependency>-->
+					<!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
+
 				</dependencies>
 			</plugin>
 			<plugin>
