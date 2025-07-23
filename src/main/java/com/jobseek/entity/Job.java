@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -17,6 +18,7 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @ToString
+
 public class Job {
 
     @Id
@@ -31,6 +33,8 @@ public class Job {
     private String location;
     @Column(name = "posted_date")
     private LocalDate postedDate;
+    @UpdateTimestamp
+    private LocalDate lastUpdated;
     @Column(name = "is_active")
     private boolean isActive;
 

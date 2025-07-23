@@ -1,9 +1,12 @@
 package com.jobseek.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -30,10 +33,15 @@ public class Candidate {
     private String linkedIn;
     @Column(name = "GitHub")
     private String gitHub;
+    @UpdateTimestamp
+    private LocalDate lastUpdated;
+
 
     @OneToOne
     @MapsId
     @JoinColumn(name = "user_id")
+//    @ToString.Exclude
+//    @JsonIgnore
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

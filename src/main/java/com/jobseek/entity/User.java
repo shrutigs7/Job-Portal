@@ -1,5 +1,6 @@
 package com.jobseek.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,6 +10,7 @@ import lombok.*;
 @Setter
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id
@@ -22,12 +24,18 @@ public class User {
     private boolean isActive;
 
     @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @JsonIgnore
     private Candidate candidate;
 
     @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @JsonIgnore
     private Admin admin;
 
     @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @JsonIgnore
     private Recruiter recruiter;
 
 
