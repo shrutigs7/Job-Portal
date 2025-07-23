@@ -1,4 +1,4 @@
-package com.jobseek.pojo;
+package com.jobseek.entity;
 
 
 import jakarta.persistence.*;
@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.time.Year;
 
 @Entity

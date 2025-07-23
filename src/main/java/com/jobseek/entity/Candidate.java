@@ -1,4 +1,4 @@
-package com.jobseek.pojo;
+package com.jobseek.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -7,7 +7,9 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -20,9 +22,9 @@ public class Candidate {
     private long userId;
 
     private String name;
-    @Column(name ="date_of_birth")
+    @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
-    @Column(name="mobile_no")
+    @Column(name = "mobile_no")
     private String mobileNo;
     @Column(name = "LinkedIn")
     private String linkedIn;
@@ -34,19 +36,28 @@ public class Candidate {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private List<Education> educationList = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private List<Experience> experienceList = new ArrayList<>();
 
-    public Candidate(String name, LocalDate dateOfBirth, String mobileNo, String linkedIn, String gitHub) {
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "candidate_skill",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "skill_id")
+    )
+    private Set<Skill> cskills = new HashSet<>();
+
+    public Candidate(String name, LocalDate dateOfBirth, String mobileNo, String linkedIn, String gitHub, Set<Skill> skills) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.mobileNo = mobileNo;
         this.linkedIn = linkedIn;
         this.gitHub = gitHub;
+        this.cskills = skills;
     }
 }

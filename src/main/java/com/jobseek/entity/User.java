@@ -1,4 +1,4 @@
-package com.jobseek.pojo;
+package com.jobseek.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

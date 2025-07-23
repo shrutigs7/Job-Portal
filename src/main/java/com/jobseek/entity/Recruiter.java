@@ -1,10 +1,13 @@
-package com.jobseek.pojo;
+package com.jobseek.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "recruiters")
@@ -30,6 +33,10 @@ public class Recruiter {
     @OneToOne
     @JoinColumn(name = "company_id")
     private Company company;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "job_id")
+    private List<Job> jobs = new ArrayList<>();
 
 
     public Recruiter(String name, String mobNumber, String title) {

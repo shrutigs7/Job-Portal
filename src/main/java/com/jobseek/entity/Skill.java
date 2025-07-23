@@ -1,13 +1,16 @@
-package com.jobseek.pojo;
+package com.jobseek.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Entity
-@Table(name = "Skill")
+@Table(name = "skills")
 @Getter
 @Setter
 @ToString(callSuper = true)
@@ -21,6 +24,11 @@ public class Skill {
    @Column(name = "skill_name")
    private String skillName;
 
+   @ManyToMany(mappedBy = "jskills")
+   private Set<Job> jobs = new HashSet<>();
+
+   @ManyToMany(mappedBy = "cskills")
+   private Set<Candidate> candidates = new HashSet<>();
 
    public Skill(long skillId, String skillName) {
       this.skillId = skillId;

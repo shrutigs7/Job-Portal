@@ -1,11 +1,10 @@
-package com.jobseek.pojo;
+package com.jobseek.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.temporal.ChronoUnit;
 
 @Entity
 @Getter
