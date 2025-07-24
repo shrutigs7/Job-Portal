@@ -20,7 +20,7 @@ public class User {
     private String email;
     @Enumerated(value = EnumType.STRING)
     private Role role;
-    @Column(name = "is_active")
+    @Column(name = "is_active", columnDefinition = "TINYINT")
     private boolean isActive;
 
     @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)

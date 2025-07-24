@@ -12,10 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 @AllArgsConstructor
 public class AdminServiceImpl implements AdminService{
 
-    private final AdminDao dao;
+    private final AdminDao adminDao;
 
     @Override
     public Admin getAdmin(long id) {
-       return dao.findById(id).orElseThrow(() -> new ResourceNotFoundException("Admin not found"));
+       return adminDao.findById(id).orElseThrow(() -> new ResourceNotFoundException("Admin not found"));
     }
 }

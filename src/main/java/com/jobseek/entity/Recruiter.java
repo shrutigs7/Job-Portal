@@ -34,8 +34,7 @@ public class Recruiter {
     @JoinColumn(name = "company_id")
     private Company company;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "job_id")
+    @OneToMany(mappedBy = "recruiter",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Job> jobs = new ArrayList<>();
 
 
