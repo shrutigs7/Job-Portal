@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -18,10 +19,15 @@ public class JobServiceImpl implements JobService{
 
     @Override
     public List<Job> getAllJobs() {
-        List<Job> jobs = jobDao.findAll();
-        if(!jobs.isEmpty())
-            return jobs;
-        else
-            throw new ResourceNotFoundException("No jobs yet registered");
+        return Optional.of(jobDao.findAll())
+                .filter(jobs -> !jobs.isEmpty())
+                .orElseThrow(() -> new ResourceNotFoundException("No jobs yet registered"));
+    }
+
+    @Override
+    public Long getTotalNumberOfJobs() {
+        return Optional.of(jobDao.count())
+                .filter(count -> count != 0L)
+                .orElseThrow(() -> new ResourceNotFoundException("No jobs listed"));
     }
 }
