@@ -5,12 +5,19 @@ import com.jobseek.entity.Size;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
-@Setter
 @Getter
-@ToString
-public class CompanyReqDto {
+@Setter
+public class RecruiterReqDto {
+
+    @NotBlank(message = "Recruiter name is required")
+    private String name;
+
+    @NotBlank(message = "Contact information is required")
+    private String mobNumber;
+
+    @NotBlank(message = "Role of Recruiter is required")
+    private String title;
 
     @NotBlank(message = "Company companyName is required")
     private String companyName;

@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface UserDao extends JpaRepository<User,Long> {
     List<User> findByRoleIn(List<String> roles);
+
+    User findByEmail(String email);
 }

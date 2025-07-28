@@ -19,7 +19,7 @@ public class Recruiter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private long userId;
-    private String Name;
+    private String name;
     private String mobNumber;
     private String title;
 
@@ -39,7 +39,7 @@ public class Recruiter {
 
 
     public Recruiter(String name, String mobNumber, String title) {
-        Name = name;
+        name = name;
         this.mobNumber = mobNumber;
         this.title = title;
 

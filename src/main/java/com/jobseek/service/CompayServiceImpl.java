@@ -18,12 +18,8 @@ public class CompayServiceImpl implements CompanyService{
     public final CompanyDao companyDao;
 
     @Override
-    public void addCompany(CompanyReqDto comapnyDTO) {
-        try {
+    public Company addCompany(CompanyReqDto comapnyDTO) {
             Company newCompany = modelMapper.map(comapnyDTO, Company.class);
-            companyDao.save(newCompany);
-        } catch (RuntimeException e) {
-            throw new ApiException(e.getMessage());
-        }
+            return companyDao.save(newCompany);
     }
 }

@@ -20,7 +20,7 @@ public class Experience {
     private long expId;
 
 //    @ManyToOne
-//    @JoinColumn(name = "user_id")
+//    @JoinColumn(companyName = "user_id")
 //    private Candidate candidate;
 
     private String role;

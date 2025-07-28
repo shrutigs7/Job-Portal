@@ -1,10 +1,11 @@
 package com.jobseek.service;
 
 import com.jobseek.dto.CompanyReqDto;
+import com.jobseek.entity.Company;
 
 public interface CompanyService {
 
-    void addCompany(CompanyReqDto comapnyDTO);
+    Company addCompany(CompanyReqDto comapnyDTO);
 
 
 }

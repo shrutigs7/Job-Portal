@@ -18,8 +18,8 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "company_id")
     private long companyId;
-
-    private String name;
+    @Column(name = "company_name")
+    private String companyName;
     private String location;
 
     @Enumerated(EnumType.STRING)
@@ -35,9 +35,9 @@ public class Company {
     private String description;
 
     // Optional: All-args constructor (except ID)
-    public Company(String name, String location, Industry industry, Size size,
+    public Company(String companyName, String location, Industry industry, Size size,
                    Integer foundedYear, String website, String description) {
-        this.name = name;
+        this.companyName = companyName;
         this.location = location;
         this.industry = industry;
         this.size = size;

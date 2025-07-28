@@ -44,4 +44,9 @@ public class AdminController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
+    @GetMapping("/user-details/{userId}")
+    public ResponseEntity<?> getUserDetails(@PathVariable long userId){
+        return ResponseEntity.ok(userService.getUser(userId));
+    }
+
 }
