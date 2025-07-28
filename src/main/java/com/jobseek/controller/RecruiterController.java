@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class RecruiterController {
 
     public final RecruiterService recruiterService;
-
-//    @PostMapping("/add/{userId}")
+    
     @PostMapping("/add")
     public ResponseEntity<?> addRecruiter(@RequestParam long userId, @RequestBody RecruiterReqDto recruiterReqDto){
         return ResponseEntity.ok(recruiterService.addRecruiter(userId,recruiterReqDto));

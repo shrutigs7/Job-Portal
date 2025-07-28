@@ -1,10 +1,14 @@
 package com.jobseek.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDate;
 import java.util.Set;
 
+@Getter
+@Setter
 public class CandidateRespDto {
-    private long userId;
     private String name;
     private LocalDate dateOfBirth;
     private String mobileNo;

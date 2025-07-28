@@ -17,10 +17,10 @@ public class CompanyController {
 
     public final CompanyService companyService;
 
-    @PostMapping("/add-company")
-    public ResponseEntity<?> addCompany(@RequestBody CompanyReqDto companyReqDto){
-            companyService.addCompany(companyReqDto);
-            return ResponseEntity.ok(new ApiResponse("Company Added"));
-    }
+//    @PostMapping("/add-company")
+//    public ResponseEntity<?> addCompany(@RequestBody CompanyReqDto companyReqDto){
+//            companyService.addCompany(companyReqDto);
+//            return ResponseEntity.ok(new ApiResponse("Company Added"));
+//    }
 
 }
