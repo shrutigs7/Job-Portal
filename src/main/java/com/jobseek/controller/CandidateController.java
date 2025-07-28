@@ -1,15 +1,15 @@
 package com.jobseek.controller;
 
-import com.jobseek.dto.EductionReqDto;
-import com.jobseek.dto.CandidateReqDto;
-import com.jobseek.dto.CandidateRespDto;
-import com.jobseek.dto.ExperienceReqDto;
+import com.jobseek.dto.*;
+import com.jobseek.entity.Skill;
 import com.jobseek.service.CandidateService;
 import com.jobseek.service.EducationService;
 import com.jobseek.service.ExperienceService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 
 @RestController
@@ -38,11 +38,16 @@ public class CandidateController {
         return ResponseEntity.ok(experienceService.addExperience(userId,experienceReqDto));
     }
 
+    @PostMapping("/add-skills/{userId}")
+    public ResponseEntity<?> addCandidateSkills(@PathVariable long userId, @RequestBody SkillsReqDto cskill){
+        return ResponseEntity.ok(candidateService.addSkills(userId,cskill));
+    }
+
 //    @GetMapping("/{userId}")
 //    public ResponseEntity<CandidateRespDto> getCandidate(@PathVariable long userId) {
-//        return ResponseEntity.ok(candidateService.getCandidateById(userId));
+//        return null;//ResponseEntity.ok(candidateService.getCandidateById(userId));
 //    }
-//
+
 //    @GetMapping
 //    public ResponseEntity<List<CandidateRespDto>> getAllCandidates() {
 //        return ResponseEntity.ok(candidateService.getAllCandidates());
@@ -52,10 +57,5 @@ public class CandidateController {
 //    public ResponseEntity<CandidateRespDto> updateCandidate(@PathVariable long userId, @RequestBody CandidateReqDto dto) {
 //        return ResponseEntity.ok(candidateService.updateCandidate(userId, dto));
 //    }
-//
-//    @DeleteMapping("/{userId}")
-//    public ResponseEntity<Void> deleteCandidate(@PathVariable long userId) {
-//        candidateService.deleteCandidate(userId);
-//        return ResponseEntity.noContent().build();
-//    }
+
 }

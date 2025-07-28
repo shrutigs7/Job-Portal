@@ -30,6 +30,10 @@ public class Skill {
    @ManyToMany(mappedBy = "cskills")
    private Set<Candidate> candidates = new HashSet<>();
 
+   public Skill() {
+
+   }
+
    public Skill(long skillId, String skillName) {
       this.skillId = skillId;
       this.skillName = skillName;
