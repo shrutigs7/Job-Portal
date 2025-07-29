@@ -1,22 +1,18 @@
 package com.jobseek.dto;
 
-import com.jobseek.entity.*;
+
+import com.jobseek.entity.Company;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class UserDetailsDto {
+public class RecruiterProfileDto extends UserDetailsDto {
 
-    private long userId;
-    private String password;
-    private String email;
-    private Role role;
-    //recruiter
-//    private String name;
-//    private String mobNumber;
-//    private String title;
-//    //company
+    private String name;
+    private String mobNumber;
+    private String title;
+    private Company company;
 //    private String companyName;
 //    private String location;
 //    private Industry industry;

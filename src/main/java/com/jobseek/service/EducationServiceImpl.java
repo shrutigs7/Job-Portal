@@ -1,7 +1,7 @@
 package com.jobseek.service;
 
 import com.jobseek.dao.CandidateDao;
-import com.jobseek.dto.EductionReqDto;
+import com.jobseek.dto.EducationReqDto;
 import com.jobseek.entity.Candidate;
 import com.jobseek.entity.Education;
 import com.jobseek.exception.ResourceNotFoundException;
@@ -22,7 +22,7 @@ public class EducationServiceImpl implements EducationService{
     public final CandidateDao candidateDao;
 
     @Override
-    public Education addEducation(EductionReqDto eductionReqDto, Long userId) {
+    public Education addEducation(EducationReqDto eductionReqDto, Long userId) {
         Education education = modelMapper.map(eductionReqDto,Education.class);
         Candidate candidate = candidateDao.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("user not found"));

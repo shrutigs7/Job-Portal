@@ -1,11 +1,9 @@
 package com.jobseek.service;
 
+import com.jobseek.dao.CandidateDao;
 import com.jobseek.dao.RecruiterDao;
 import com.jobseek.dao.UserDao;
-import com.jobseek.dto.SignInDto;
-import com.jobseek.dto.SignUpDto;
-import com.jobseek.dto.UserDetailsDto;
-import com.jobseek.dto.UserResponseDto;
+import com.jobseek.dto.*;
 import com.jobseek.entity.Company;
 import com.jobseek.entity.Recruiter;
 import com.jobseek.entity.User;
@@ -28,7 +26,8 @@ public class UserServiceImpl implements UserService{
 
     public final UserDao userDao;
     public final ModelMapper modelMapper;
-    public final RecruiterDao recruiterDao;
+    public final CandidateService candidateService;
+    public final RecruiterService recruiterService;
 
     @Override
     public List<User> getAllUsers() {
@@ -55,27 +54,26 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDetailsDto getUser(Long userId) {
-        UserDetailsDto userDetailsDto =  userDao.findById(userId)
-                .map(user -> modelMapper.map(user,UserDetailsDto.class))
+        User user =  userDao.findById(userId)
+//                .map(user -> modelMapper.map(user,UserDetailsDto.class))
                 .orElseThrow(() -> new ResourceNotFoundException("User Not found"));
 
-        switch (userDetailsDto.getRole()){
-            case RECRUITER : Recruiter recruiter = recruiterDao.findById(userId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Recruiter Not found"));
-                    userDetailsDto.setName(recruiter.getName());
-                    userDetailsDto.setMobNumber(recruiter.getMobNumber());
-                    userDetailsDto.setTitle(recruiter.getTitle());
-                    Company company = recruiter.getCompany();
-                    userDetailsDto.setCompanyName(company.getCompanyName());
-                    userDetailsDto.setLocation(company.getLocation());
-                    userDetailsDto.setIndustry(company.getIndustry());
-                    userDetailsDto.setSize(company.getSize());
-                    userDetailsDto.setFoundedYear(company.getFoundedYear());
-                    userDetailsDto.setWebsite(company.getWebsite());
-                    userDetailsDto.setDescription(company.getDescription());
+        switch (user.getRole()) {
+            case CANDIDATE -> {
+                CandidateProfileDto candidateProfile = candidateService.getCandidateProfile(user.getUserId());
+                candidateProfile.setEmail(user.getEmail());
+                candidateProfile.setRole(user.getRole());
+                return candidateProfile;
+            }
 
-                break;
+            case RECRUITER -> {
+                RecruiterProfileDto recruiterProfile = recruiterService.getRecruiterProfile(user.getUserId());
+                recruiterProfile.setEmail(user.getEmail());
+                recruiterProfile.setRole(user.getRole());
+                return recruiterProfile;
+            }
+            default -> throw new IllegalArgumentException("Unsupported role: " + user.getRole());
         }
-        return userDetailsDto;
     }
+
 }

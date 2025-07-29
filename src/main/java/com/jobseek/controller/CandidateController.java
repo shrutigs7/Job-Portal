@@ -1,15 +1,13 @@
 package com.jobseek.controller;
 
 import com.jobseek.dto.*;
-import com.jobseek.entity.Skill;
 import com.jobseek.service.CandidateService;
 import com.jobseek.service.EducationService;
 import com.jobseek.service.ExperienceService;
+import com.jobseek.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Set;
 
 
 @RestController
@@ -23,13 +21,15 @@ public class CandidateController {
 
     public final ExperienceService experienceService;
 
+    public final UserService userService;
+
     @PostMapping("/add/{userId}")
     public ResponseEntity<CandidateRespDto> addCandidate(@RequestBody CandidateReqDto dto, @PathVariable long userId) {
         return ResponseEntity.ok(candidateService.createCandidate(dto, userId));
     }
 
     @PostMapping("/add-education/{userId}")
-    public ResponseEntity<?> addCandidateEducation(@PathVariable long userId,@RequestBody EductionReqDto eductionReqDto){
+    public ResponseEntity<?> addCandidateEducation(@PathVariable long userId,@RequestBody EducationReqDto eductionReqDto){
         return ResponseEntity.ok(educationService.addEducation(eductionReqDto,userId));
     }
 
@@ -43,10 +43,11 @@ public class CandidateController {
         return ResponseEntity.ok(candidateService.addSkills(userId,cskill));
     }
 
-//    @GetMapping("/{userId}")
-//    public ResponseEntity<CandidateRespDto> getCandidate(@PathVariable long userId) {
-//        return null;//ResponseEntity.ok(candidateService.getCandidateById(userId));
-//    }
+    @GetMapping("/profile/{userId}")
+    public ResponseEntity<?> getCandidateProfile(@PathVariable long userId) {
+//        return ResponseEntity.ok(candidateService.getCandidateProfile(userId));
+        return ResponseEntity.ok(userService.getUser(userId));
+    }
 
 //    @GetMapping
 //    public ResponseEntity<List<CandidateRespDto>> getAllCandidates() {

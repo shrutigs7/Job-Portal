@@ -1,5 +1,6 @@
 package com.jobseek.service;
 
+import com.jobseek.dto.CandidateProfileDto;
 import com.jobseek.dto.CandidateReqDto;
 import com.jobseek.dto.CandidateRespDto;
 import com.jobseek.dto.SkillsReqDto;
@@ -13,6 +14,8 @@ public interface CandidateService {
     CandidateRespDto createCandidate(CandidateReqDto candidateReqDto, long userId);
 
     CandidateRespDto addSkills(Long userId, SkillsReqDto cskill);
+
+    CandidateProfileDto getCandidateProfile(Long userId);
 
 //    CandidateRespDto updateCandidate(long userId, CandidateReqDto dto);
 //

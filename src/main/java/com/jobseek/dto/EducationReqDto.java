@@ -12,7 +12,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class EductionReqDto {
+public class EducationReqDto {
 
     @NotNull(message = "Degree is required")
     private Degree degree;
