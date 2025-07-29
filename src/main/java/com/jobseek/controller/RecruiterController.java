@@ -1,6 +1,8 @@
 package com.jobseek.controller;
 
+import com.jobseek.dto.JobReqDto;
 import com.jobseek.dto.RecruiterReqDto;
+import com.jobseek.service.JobService;
 import com.jobseek.service.RecruiterService;
 import com.jobseek.service.UserService;
 import lombok.AllArgsConstructor;
@@ -14,6 +16,7 @@ public class RecruiterController {
 
     public final RecruiterService recruiterService;
     public final UserService userService;
+    public final JobService jobService;
 
     @PostMapping("/add")
     public ResponseEntity<?> addRecruiter(@RequestParam long userId, @RequestBody RecruiterReqDto recruiterReqDto){
@@ -26,4 +29,18 @@ public class RecruiterController {
         return ResponseEntity.ok(userService.getUser(userId));
     }
 
+    @PostMapping("/job/{userId}")
+    public ResponseEntity<?> addJob(@PathVariable long userId, @RequestBody JobReqDto jobReqDto){
+        return ResponseEntity.ok(jobService.addJob(userId,jobReqDto));
+    }
+
+    @PutMapping("/job/{jobId}")
+    public ResponseEntity<?> updateJob(@PathVariable long jobId, @RequestBody JobReqDto jobReqDto){
+        return ResponseEntity.ok(jobService.updateJob(jobId,jobReqDto));
+    }
+
+    @DeleteMapping("/job/{jobId}")
+    public ResponseEntity<?> deleteJob(@PathVariable long jobId){
+        return ResponseEntity.ok("deleted");
+    }
 }

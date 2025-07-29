@@ -1,7 +1,6 @@
 package com.jobseek.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.EnumNaming;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,7 +42,7 @@ public class Job {
     @JsonIgnore
     private Recruiter recruiter;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany
     @JoinTable(
             name = "job_skill",
             joinColumns = @JoinColumn(name = "job_id"),
@@ -52,13 +51,13 @@ public class Job {
     @JsonIgnore
     private Set<Skill> jskills = new HashSet<Skill>();
 
-    public Job(String title, JobType type, String description, String location, LocalDate postedDate, boolean isActive, Recruiter recruiter, Set<Skill> skills) {
+    public Job(String title, JobType type, String description, String location, Recruiter recruiter, Set<Skill> skills) {
         this.title = title;
         this.type = type;
         this.description = description;
         this.location = location;
-        this.postedDate = postedDate;
-        this.isActive = isActive;
+        this.postedDate = LocalDate.now();
+        this.isActive = true;
         this.recruiter = recruiter;
         this.jskills = skills;
     }
