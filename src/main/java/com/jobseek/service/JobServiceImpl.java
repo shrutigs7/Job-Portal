@@ -7,6 +7,7 @@ import com.jobseek.dto.ApiResponse;
 import com.jobseek.dto.JobReqDto;
 import com.jobseek.dto.JobRespDto;
 import com.jobseek.entity.Job;
+import com.jobseek.entity.Recruiter;
 import com.jobseek.entity.Skill;
 import com.jobseek.exception.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
@@ -39,6 +40,19 @@ public class JobServiceImpl implements JobService {
                 .stream()
                 .filter(Job::isActive)
                 .map(jobs -> modelMapper.map(jobs,JobRespDto.class))
+                .toList();
+    }
+
+    @Override
+    public List<JobRespDto> getAllJobs(Long userId) {
+        Recruiter recruiter = recruiterDao.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("No jobs yet registered"));
+        List<Job> jobList = Optional.of(jobDao.findAllByRecruiterUserId(userId))
+                .filter(jobs -> !jobs.isEmpty())
+                .orElseThrow(() -> new ResourceNotFoundException("No jobs yet registered"));
+
+        return jobList.stream()
+                .map(job -> modelMapper.map(job,JobRespDto.class))
                 .toList();
     }
 

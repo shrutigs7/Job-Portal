@@ -43,4 +43,9 @@ public class RecruiterController {
     public ResponseEntity<?> deleteJob(@PathVariable long jobId){
         return ResponseEntity.ok(jobService.deleteJob(jobId));
     }
+
+    @GetMapping("/jobs/{userId}")
+    public ResponseEntity<?> getPostedJobs(@PathVariable long userId){
+        return ResponseEntity.ok(jobService.getAllJobs(userId));
+    }
 }

@@ -11,6 +11,8 @@ public interface JobService {
 
     List<JobRespDto> getAllJobs();
 
+    List<JobRespDto> getAllJobs(Long userId);
+
     Job addJob(Long userId, JobReqDto jobReqDto);
 
     JobRespDto updateJob(Long jobId, JobReqDto jobReqDto);
