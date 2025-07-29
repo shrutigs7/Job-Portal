@@ -37,6 +37,7 @@ public class JobServiceImpl implements JobService {
                 .orElseThrow(() -> new ResourceNotFoundException("No jobs yet registered"));
         return jobList
                 .stream()
+                .filter(Job::isActive)
                 .map(jobs -> modelMapper.map(jobs,JobRespDto.class))
                 .toList();
     }
