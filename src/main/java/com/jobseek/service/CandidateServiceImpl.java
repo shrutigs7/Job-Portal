@@ -3,6 +3,7 @@ package com.jobseek.service;
 import com.jobseek.dao.CandidateDao;
 import com.jobseek.dao.SkillDao;
 import com.jobseek.dao.UserDao;
+import com.jobseek.dto.CandidateProfileDto;
 import com.jobseek.dto.CandidateReqDto;
 import com.jobseek.dto.CandidateRespDto;
 import com.jobseek.dto.SkillsReqDto;
@@ -45,5 +46,15 @@ public class CandidateServiceImpl implements CandidateService{
         Set<Skill> skills = new HashSet<>(skillDao.findAllById(cskill.getSkillIds()));
         candidate.getCskills().addAll(skills);
         return modelMapper.map(candidateDao.save(candidate), CandidateRespDto.class);
+    }
+
+    @Override
+    public CandidateProfileDto getCandidateProfile(Long userId) {
+        Candidate candidate = candidateDao.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Candidate not found"));
+        candidate.getExperienceList();
+        candidate.getEducationList();
+        candidate.getCskills();
+        return modelMapper.map(candidate,CandidateProfileDto.class);
     }
 }

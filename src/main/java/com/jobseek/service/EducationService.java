@@ -1,9 +1,9 @@
 package com.jobseek.service;
 
-import com.jobseek.dto.EductionReqDto;
+import com.jobseek.dto.EducationReqDto;
 import com.jobseek.entity.Education;
 
 public interface EducationService {
 
-    Education addEducation(EductionReqDto eductionReqDto, Long userId);
+    Education addEducation(EducationReqDto eductionReqDto, Long userId);
 }

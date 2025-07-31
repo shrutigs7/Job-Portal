@@ -1,5 +1,6 @@
 package com.jobseek.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,9 +26,11 @@ public class Skill {
    private String skillName;
 
    @ManyToMany(mappedBy = "jskills")
+   @JsonIgnore
    private Set<Job> jobs = new HashSet<>();
 
    @ManyToMany(mappedBy = "cskills")
+   @JsonIgnore
    private Set<Candidate> candidates = new HashSet<>();
 
    public Skill() {

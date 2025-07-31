@@ -4,11 +4,13 @@ import com.jobseek.dao.CompanyDao;
 import com.jobseek.dao.RecruiterDao;
 import com.jobseek.dao.UserDao;
 import com.jobseek.dto.CompanyReqDto;
+import com.jobseek.dto.RecruiterProfileDto;
 import com.jobseek.dto.RecruiterReqDto;
 import com.jobseek.dto.RecruiterRespDto;
 import com.jobseek.entity.Company;
 import com.jobseek.entity.Recruiter;
 import com.jobseek.entity.User;
+import com.jobseek.exception.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -40,5 +42,13 @@ public class RecruiterServiceImpl implements RecruiterService{
         Company company = companyService.addCompany(companyReqDto);
         recruiter.setCompany(company);
         return modelMapper.map(recruiterDao.save(recruiter), RecruiterRespDto.class);
+    }
+
+    @Override
+    public RecruiterProfileDto getRecruiterProfile(Long userId) {
+        Recruiter recruiter = recruiterDao.findById(userId)
+                .orElseThrow(()-> new ResourceNotFoundException("Recruiter not found"));
+        recruiter.getCompany();
+        return modelMapper.map(recruiter,RecruiterProfileDto.class);
     }
 }
