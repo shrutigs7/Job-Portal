@@ -9,7 +9,9 @@ import lombok.ToString;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -26,6 +28,10 @@ public class Job {
     private long jobId;
 
     private String title;
+    @Column(name = "company-name")
+    private String companyName;
+    @Column(name = "year-of-experience")
+    private int yearOfExperience;
     @Enumerated(EnumType.STRING)
     private JobType type;
     private String description;
@@ -50,6 +56,10 @@ public class Job {
     )
     @JsonIgnore
     private Set<Skill> jskills = new HashSet<Skill>();
+
+    @OneToMany(mappedBy = "job", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<JobApplication> applications = new ArrayList<>();
+
 
     public Job(String title, JobType type, String description, String location, Recruiter recruiter, Set<Skill> skills) {
         this.title = title;

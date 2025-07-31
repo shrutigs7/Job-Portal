@@ -14,6 +14,8 @@ import java.util.Set;
 public class JobRespDto {
 
     private String title;
+    private String companyName;
+    private int yearOfExperience;
     private JobType type;
     private String description;
     private String location;

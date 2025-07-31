@@ -14,7 +14,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-
 @Entity
 @Getter
 @Setter
@@ -60,6 +59,9 @@ public class Candidate {
             inverseJoinColumns = @JoinColumn(name = "skill_id")
     )
     private Set<Skill> cskills = new HashSet<>();
+
+    @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<JobApplication> applications = new ArrayList<>();
 
     public Candidate(String name, LocalDate dateOfBirth, String mobileNo, String linkedIn, String gitHub, Set<Skill> skills) {
         this.name = name;
