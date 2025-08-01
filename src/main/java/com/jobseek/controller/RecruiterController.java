@@ -2,6 +2,7 @@ package com.jobseek.controller;
 
 import com.jobseek.dto.JobReqDto;
 import com.jobseek.dto.RecruiterReqDto;
+import com.jobseek.service.CandidateService;
 import com.jobseek.service.JobService;
 import com.jobseek.service.RecruiterService;
 import com.jobseek.service.UserService;
@@ -17,6 +18,7 @@ public class RecruiterController {
     public final RecruiterService recruiterService;
     public final UserService userService;
     public final JobService jobService;
+    public final CandidateService candidateService;
 
     @PostMapping("/add")
     public ResponseEntity<?> addRecruiter(@RequestParam long userId, @RequestBody RecruiterReqDto recruiterReqDto){
@@ -48,4 +50,17 @@ public class RecruiterController {
     public ResponseEntity<?> getPostedJobs(@PathVariable long userId){
         return ResponseEntity.ok(jobService.getAllJobs(userId));
     }
+
+    @GetMapping("/candidates/search")
+    public ResponseEntity<?> searchCandidatesBySkill(@RequestParam String skill) {
+        return ResponseEntity.ok(candidateService.searchCandidatesBySkill(skill));
+    }
+
+    @GetMapping("/candidates/experience")
+    public ResponseEntity<?> searchByExperience(@RequestParam double minYears) {
+        return ResponseEntity.ok(candidateService.searchCandidatesByExperience(minYears));
+    }
+
+
+
 }

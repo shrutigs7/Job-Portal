@@ -17,6 +17,13 @@ public interface CandidateService {
 
     CandidateProfileDto getCandidateProfile(Long userId);
 
+    List<CandidateRespDto> searchCandidatesBySkill(String skillName);
+
+    List<CandidateRespDto> searchCandidatesByExperience(double minYears);
+
+
+
+
 //    CandidateRespDto updateCandidate(long userId, CandidateReqDto dto);
 //
 //    CandidateRespDto getCandidateById(long userId);
