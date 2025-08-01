@@ -18,4 +18,8 @@ public interface JobService {
     JobRespDto updateJob(Long jobId, JobReqDto jobReqDto);
 
     ApiResponse deleteJob(Long jobId);
+
+    List<Job> searchJobsBySkillName(String skillName);
+
+    List<Job> getJobsByYearOfExperience(int yearOfExperience);
 }

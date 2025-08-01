@@ -43,6 +43,7 @@ public class Job {
     @Column(name = "is_active", columnDefinition = "TINYINT")
     private boolean isActive;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     @JsonIgnore
@@ -55,9 +56,10 @@ public class Job {
             inverseJoinColumns = @JoinColumn(name = "skill_id")
     )
     @JsonIgnore
-    private Set<Skill> jskills = new HashSet<Skill>();
+    private Set<Skill> jskills = new HashSet<>();
 
     @OneToMany(mappedBy = "job", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<JobApplication> applications = new ArrayList<>();
 
 

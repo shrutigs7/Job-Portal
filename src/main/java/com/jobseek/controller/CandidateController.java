@@ -1,10 +1,15 @@
 package com.jobseek.controller;
 
 import com.jobseek.dto.*;
+import com.jobseek.entity.Job;
+import com.jobseek.entity.Skill;
+import com.jobseek.service.*;
 import com.jobseek.service.*;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -19,6 +24,10 @@ public class CandidateController {
     public final ExperienceService experienceService;
 
     public final UserService userService;
+
+    public final SkillService skillService;
+
+    public final JobService jobService;
 
     public final JobApplicationService jobApplicationService;
 
@@ -51,6 +60,17 @@ public class CandidateController {
     @PostMapping("/job")
     public ResponseEntity<?> applyForJob(@RequestBody JobApplicationDto jobApplicationDto){
         return ResponseEntity.ok(jobApplicationService.addJobApplication(jobApplicationDto));
+    }
+
+    @GetMapping("/search/{skill}")
+    public List<Job> searchSkills(@PathVariable String skill) {
+        return jobService.searchJobsBySkillName(skill) ;
+    }
+
+    @GetMapping("/search/experience/{years}")
+    public ResponseEntity<List<Job>> searchJobsByExperience(@PathVariable int years) {
+        List<Job> jobs = jobService.getJobsByYearOfExperience(years);
+        return ResponseEntity.ok(jobs);
     }
 
 //    @GetMapping

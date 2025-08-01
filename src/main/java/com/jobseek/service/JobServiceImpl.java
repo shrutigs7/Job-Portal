@@ -36,7 +36,7 @@ public class JobServiceImpl implements JobService {
         List<Job> jobList = Optional.of(jobDao.findAll())
                 .filter(jobs -> !jobs.isEmpty())
                 .orElseThrow(() -> new ResourceNotFoundException("No jobs yet registered"));
-        return jobList
+                return jobList
                 .stream()
                 .filter(Job::isActive)
                 .map(jobs -> modelMapper.map(jobs,JobRespDto.class))
@@ -88,6 +88,19 @@ public class JobServiceImpl implements JobService {
         return new ApiResponse("Job Deleted");
     }
 
+    @Override
+    public List<Job> searchJobsBySkillName(String skillName) {
+        return jobDao.findJobsBySkillName(skillName);
+    }
+
+    @Override
+    public List<Job> getJobsByYearOfExperience(int yearOfExperience) {
+        return jobDao.findByYearOfExperienceLessThanEqual(yearOfExperience);
+    }
+
+
+
+
     private Set<Skill> setJSkills(JobReqDto jobReqDto){
         Set<Skill> skills = new HashSet<>();
         for (Long skillId : jobReqDto.getJskills()) {
@@ -98,3 +111,4 @@ public class JobServiceImpl implements JobService {
         return skills;
     }
 }
+
