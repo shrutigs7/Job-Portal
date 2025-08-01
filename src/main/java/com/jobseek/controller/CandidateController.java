@@ -1,10 +1,7 @@
 package com.jobseek.controller;
 
 import com.jobseek.dto.*;
-import com.jobseek.service.CandidateService;
-import com.jobseek.service.EducationService;
-import com.jobseek.service.ExperienceService;
-import com.jobseek.service.UserService;
+import com.jobseek.service.*;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,30 +20,37 @@ public class CandidateController {
 
     public final UserService userService;
 
-    @PostMapping("/add/{userId}")
+    public final JobApplicationService jobApplicationService;
+
+    @PostMapping("/{userId}")
     public ResponseEntity<CandidateRespDto> addCandidate(@RequestBody CandidateReqDto dto, @PathVariable long userId) {
         return ResponseEntity.ok(candidateService.createCandidate(dto, userId));
     }
 
-    @PostMapping("/add-education/{userId}")
+    @PostMapping("/education/{userId}")
     public ResponseEntity<?> addCandidateEducation(@PathVariable long userId,@RequestBody EducationReqDto eductionReqDto){
         return ResponseEntity.ok(educationService.addEducation(eductionReqDto,userId));
     }
 
-    @PostMapping("/add-experience/{userId}")
+    @PostMapping("/experience/{userId}")
     public ResponseEntity<?> addCandidateExperience(@PathVariable long userId,@RequestBody ExperienceReqDto experienceReqDto){
         return ResponseEntity.ok(experienceService.addExperience(userId,experienceReqDto));
     }
 
-    @PostMapping("/add-skills/{userId}")
+    @PostMapping("/skills/{userId}")
     public ResponseEntity<?> addCandidateSkills(@PathVariable long userId, @RequestBody SkillsReqDto cskill){
         return ResponseEntity.ok(candidateService.addSkills(userId,cskill));
     }
 
-    @GetMapping("/profile/{userId}")
+    @GetMapping("/{userId}")
     public ResponseEntity<?> getCandidateProfile(@PathVariable long userId) {
 //        return ResponseEntity.ok(candidateService.getCandidateProfile(userId));
         return ResponseEntity.ok(userService.getUser(userId));
+    }
+
+    @PostMapping("/job")
+    public ResponseEntity<?> applyForJob(@RequestBody JobApplicationDto jobApplicationDto){
+        return ResponseEntity.ok(jobApplicationService.addJobApplication(jobApplicationDto));
     }
 
 //    @GetMapping

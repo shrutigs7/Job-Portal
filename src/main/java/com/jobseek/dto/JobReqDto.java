@@ -3,6 +3,7 @@ package com.jobseek.dto;
 import com.jobseek.entity.JobType;
 import com.jobseek.entity.Recruiter;
 import com.jobseek.entity.Skill;
+import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +15,8 @@ import java.util.Set;
 public class JobReqDto {
 
     private String title;
+    private String companyName;
+    private int yearOfExperience;
     private JobType type;
     private String description;
     private String location;
