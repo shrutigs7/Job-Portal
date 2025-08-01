@@ -53,6 +53,11 @@ public class CandidateController {
         return ResponseEntity.ok(jobApplicationService.addJobApplication(jobApplicationDto));
     }
 
+    @GetMapping("/job/{userId}")
+    public ResponseEntity<?> getAppliedJobs(@PathVariable Long userId){
+        return ResponseEntity.ok(candidateService.getAppliedJobs(userId));
+    }
+
 //    @GetMapping
 //    public ResponseEntity<List<CandidateRespDto>> getAllCandidates() {
 //        return ResponseEntity.ok(candidateService.getAllCandidates());

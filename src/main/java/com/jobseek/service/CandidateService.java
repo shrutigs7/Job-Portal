@@ -1,9 +1,7 @@
 package com.jobseek.service;
 
-import com.jobseek.dto.CandidateProfileDto;
-import com.jobseek.dto.CandidateReqDto;
-import com.jobseek.dto.CandidateRespDto;
-import com.jobseek.dto.SkillsReqDto;
+import com.jobseek.dto.*;
+import com.jobseek.entity.Job;
 import com.jobseek.entity.Skill;
 
 import java.util.List;
@@ -16,6 +14,8 @@ public interface CandidateService {
     CandidateRespDto addSkills(Long userId, SkillsReqDto cskill);
 
     CandidateProfileDto getCandidateProfile(Long userId);
+
+    List<JobRespDto> getAppliedJobs(Long userId);
 
 //    CandidateRespDto updateCandidate(long userId, CandidateReqDto dto);
 //
