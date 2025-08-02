@@ -27,7 +27,6 @@ public class RecruiterController {
 
     @GetMapping("/profile/{userId}")
     public ResponseEntity<?> getRecruiterProfile(@PathVariable long userId){
-//        return ResponseEntity.ok(recruiterService.getRecruiterProfile(userId));
         return ResponseEntity.ok(userService.getUser(userId));
     }
 
@@ -60,7 +59,6 @@ public class RecruiterController {
     public ResponseEntity<?> searchByExperience(@RequestParam double minYears) {
         return ResponseEntity.ok(candidateService.searchCandidatesByExperience(minYears));
     }
-
 
 
 }

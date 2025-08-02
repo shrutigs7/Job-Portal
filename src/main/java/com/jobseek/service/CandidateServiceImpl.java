@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -80,6 +81,7 @@ public class CandidateServiceImpl implements CandidateService {
                 .toList();
     }
 
+
     private double calculateTotalExperienceInYears(List<Experience> experienceList) {
         double totalMonths = 0;
 
@@ -88,10 +90,41 @@ public class CandidateServiceImpl implements CandidateService {
             LocalDate end = (exp.getEndDate() != null) ? exp.getEndDate() : LocalDate.now();
 
             if (start != null && end != null && !end.isBefore(start)) {
-                totalMonths += java.time.temporal.ChronoUnit.MONTHS.between(start, end);
+                Period period = Period.between(start, end);
+                int months = period.getYears() * 12 + period.getMonths();
+                totalMonths += months;
             }
         }
-        return totalMonths / 12.0;
+        double totalYears = totalMonths / 12.0;
+        return Math.round(totalYears * 100.0) / 100.0;
 
+    }
+
+    @Override
+    public CandidateRespDto updateCandidateProfile(long userId, CandidateReqDto dto) {
+        Candidate candidate = candidateDao.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Candidate not found with ID: " + userId));
+
+        // Update fields
+        if (dto.getName() != null) candidate.setName(dto.getName());
+        if (dto.getDateOfBirth() != null) candidate.setDateOfBirth(dto.getDateOfBirth());
+        if (dto.getMobileNo() != null) candidate.setMobileNo(dto.getMobileNo());
+        if (dto.getLinkedIn() != null) candidate.setLinkedIn(dto.getLinkedIn());
+        if (dto.getGitHub() != null) candidate.setGitHub(dto.getGitHub());
+
+        Candidate updatedCandidate = candidateDao.save(candidate);
+
+        return mapToResponseDto(updatedCandidate);
+    }
+
+    private CandidateRespDto mapToResponseDto(Candidate candidate) {
+        CandidateRespDto dto = new CandidateRespDto();
+        dto.setUserId(candidate.getUserId());
+        dto.setName(candidate.getName());
+        dto.setDateOfBirth(candidate.getDateOfBirth());
+        dto.setMobileNo(candidate.getMobileNo());
+        dto.setLinkedIn(candidate.getLinkedIn());
+        dto.setGitHub(candidate.getGitHub());
+        return dto;
     }
 }

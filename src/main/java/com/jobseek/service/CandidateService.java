@@ -21,6 +21,7 @@ public interface CandidateService {
 
     List<CandidateRespDto> searchCandidatesByExperience(double minYears);
 
+    CandidateRespDto updateCandidateProfile(long userId, CandidateReqDto dto);
 
 
 

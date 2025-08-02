@@ -9,6 +9,8 @@ import java.util.Set;
 @Getter
 @Setter
 public class CandidateRespDto {
+
+    private long userId;
     private String name;
     private LocalDate dateOfBirth;
     private String mobileNo;

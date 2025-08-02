@@ -73,6 +73,14 @@ public class CandidateController {
         return ResponseEntity.ok(jobs);
     }
 
+    @PutMapping("/update/{userId}")
+    public ResponseEntity<CandidateRespDto> updateCandidateProfile(
+            @PathVariable long userId,
+            @RequestBody CandidateReqDto dto) {
+        return ResponseEntity.ok(candidateService.updateCandidateProfile(userId, dto));
+    }
+
+
 //    @GetMapping
 //    public ResponseEntity<List<CandidateRespDto>> getAllCandidates() {
 //        return ResponseEntity.ok(candidateService.getAllCandidates());
