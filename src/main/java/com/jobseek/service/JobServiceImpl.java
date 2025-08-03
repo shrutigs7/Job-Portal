@@ -47,7 +47,7 @@ public class JobServiceImpl implements JobService {
     public List<JobRespDto> getAllJobs(Long userId) {
         Recruiter recruiter = recruiterDao.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("No jobs yet registered"));
-        List<Job> jobList = Optional.of(jobDao.findAllByRecruiterUserId(userId))
+        List<Job> jobList = Optional.of(jobDao.findAllByRecruiterUserIdAndIsActiveTrue(userId))
                 .filter(jobs -> !jobs.isEmpty())
                 .orElseThrow(() -> new ResourceNotFoundException("No jobs yet registered"));
 

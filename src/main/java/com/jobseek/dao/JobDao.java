@@ -10,4 +10,6 @@ public interface JobDao extends JpaRepository<Job,Long> {
 
     List<Job> findAllByRecruiterUserId(Long userId);
     Optional<Job> findAllByJobIdAndIsActiveTrue(long jobId);
+
+    List<Job> findAllByRecruiterUserIdAndIsActiveTrue(Long userId);
 }
