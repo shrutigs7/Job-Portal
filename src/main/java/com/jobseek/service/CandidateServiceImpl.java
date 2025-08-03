@@ -6,6 +6,14 @@ import com.jobseek.dao.SkillDao;
 import com.jobseek.dao.UserDao;
 import com.jobseek.dto.*;
 import com.jobseek.entity.*;
+import com.jobseek.dto.CandidateProfileDto;
+import com.jobseek.dto.CandidateReqDto;
+import com.jobseek.dto.CandidateRespDto;
+import com.jobseek.dto.SkillsReqDto;
+import com.jobseek.entity.Candidate;
+import com.jobseek.entity.Experience;
+import com.jobseek.entity.Skill;
+import com.jobseek.entity.User;
 import com.jobseek.exception.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -13,14 +21,17 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 @AllArgsConstructor
-public class CandidateServiceImpl implements CandidateService{
+public class CandidateServiceImpl implements CandidateService {
 
     public final CandidateDao candidateDao;
     public final UserDao userDao;
@@ -30,7 +41,7 @@ public class CandidateServiceImpl implements CandidateService{
 
     @Override
     public CandidateRespDto createCandidate(CandidateReqDto candidateReqDto, long userId) {
-        Candidate candidate = modelMapper.map(candidateReqDto,Candidate.class);
+        Candidate candidate = modelMapper.map(candidateReqDto, Candidate.class);
         User user = userDao.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("No user with passed userId"));
         candidate.setUser(user);
@@ -65,5 +76,71 @@ public class CandidateServiceImpl implements CandidateService{
                 .map(JobApplication::getJob)
                 .map(job-> modelMapper.map(job, JobRespDto.class))
                 .toList();
+    }
+
+
+    @Override
+    public List<CandidateRespDto> searchCandidatesBySkill(String skillName) {
+        List<Candidate> candidates = candidateDao.findCandidatesBySkillName(skillName);
+        return candidates.stream()
+                .map(candidate -> modelMapper.map(candidate, CandidateRespDto.class))
+                .toList();
+    }
+
+    @Override
+    public List<CandidateRespDto> searchCandidatesByExperience(double minYears) {
+        List<Candidate> candidates = candidateDao.findAll();  // fetch all
+
+        return candidates.stream()
+                .filter(candidate -> calculateTotalExperienceInYears(candidate.getExperienceList()) >= minYears)
+                .map(candidate -> modelMapper.map(candidate, CandidateRespDto.class))
+                .toList();
+    }
+
+
+    private double calculateTotalExperienceInYears(List<Experience> experienceList) {
+        double totalMonths = 0;
+
+        for (Experience exp : experienceList) {
+            LocalDate start = exp.getStartDate();
+            LocalDate end = (exp.getEndDate() != null) ? exp.getEndDate() : LocalDate.now();
+
+            if (start != null && end != null && !end.isBefore(start)) {
+                Period period = Period.between(start, end);
+                int months = period.getYears() * 12 + period.getMonths();
+                totalMonths += months;
+            }
+        }
+        double totalYears = totalMonths / 12.0;
+        return Math.round(totalYears * 100.0) / 100.0;
+
+    }
+
+    @Override
+    public CandidateRespDto updateCandidateProfile(long userId, CandidateReqDto dto) {
+        Candidate candidate = candidateDao.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Candidate not found with ID: " + userId));
+
+        // Update fields
+        if (dto.getName() != null) candidate.setName(dto.getName());
+        if (dto.getDateOfBirth() != null) candidate.setDateOfBirth(dto.getDateOfBirth());
+        if (dto.getMobileNo() != null) candidate.setMobileNo(dto.getMobileNo());
+        if (dto.getLinkedIn() != null) candidate.setLinkedIn(dto.getLinkedIn());
+        if (dto.getGitHub() != null) candidate.setGitHub(dto.getGitHub());
+
+        Candidate updatedCandidate = candidateDao.save(candidate);
+
+        return mapToResponseDto(updatedCandidate);
+    }
+
+    private CandidateRespDto mapToResponseDto(Candidate candidate) {
+        CandidateRespDto dto = new CandidateRespDto();
+        dto.setUserId(candidate.getUserId());
+        dto.setName(candidate.getName());
+        dto.setDateOfBirth(candidate.getDateOfBirth());
+        dto.setMobileNo(candidate.getMobileNo());
+        dto.setLinkedIn(candidate.getLinkedIn());
+        dto.setGitHub(candidate.getGitHub());
+        return dto;
     }
 }

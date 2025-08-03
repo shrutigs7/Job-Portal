@@ -99,6 +99,19 @@ public class JobServiceImpl implements JobService {
                 .toList();
     }
 
+    @Override
+    public List<Job> searchJobsBySkillName(String skillName) {
+        return jobDao.findJobsBySkillName(skillName);
+    }
+
+    @Override
+    public List<Job> getJobsByYearOfExperience(int yearOfExperience) {
+        return jobDao.findByYearOfExperienceLessThanEqual(yearOfExperience);
+    }
+
+
+
+
     private Set<Skill> setJSkills(JobReqDto jobReqDto){
         Set<Skill> skills = new HashSet<>();
         for (Long skillId : jobReqDto.getJskills()) {
@@ -109,3 +122,4 @@ public class JobServiceImpl implements JobService {
         return skills;
     }
 }
+

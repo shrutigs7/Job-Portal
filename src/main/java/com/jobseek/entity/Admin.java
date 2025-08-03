@@ -26,8 +26,6 @@ public class Admin {
 //    @JsonIgnore
     private User user;
 
-
-
     public Admin( String name, String mobNumber) {
 
         this.name = name;

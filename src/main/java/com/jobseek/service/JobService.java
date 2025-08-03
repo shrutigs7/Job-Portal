@@ -21,4 +21,8 @@ public interface JobService {
     ApiResponse deleteJob(Long jobId);
 
     List<CandidateProfileDto> getJobApplications(Long jobId);
+
+    List<Job> searchJobsBySkillName(String skillName);
+
+    List<Job> getJobsByYearOfExperience(int yearOfExperience);
 }
