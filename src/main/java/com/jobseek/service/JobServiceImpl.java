@@ -109,9 +109,6 @@ public class JobServiceImpl implements JobService {
         return jobDao.findByYearOfExperienceLessThanEqual(yearOfExperience);
     }
 
-
-
-
     private Set<Skill> setJSkills(JobReqDto jobReqDto){
         Set<Skill> skills = new HashSet<>();
         for (Long skillId : jobReqDto.getJskills()) {
