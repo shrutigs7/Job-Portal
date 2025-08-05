@@ -1,4 +1,4 @@
-package com.app.custom_exception_handler;
+package com.jobseek.exception;
 
 import java.util.List;
 import java.util.Map;

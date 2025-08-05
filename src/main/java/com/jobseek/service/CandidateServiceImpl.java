@@ -1,8 +1,11 @@
 package com.jobseek.service;
 
 import com.jobseek.dao.CandidateDao;
+import com.jobseek.dao.JobApplicationDao;
 import com.jobseek.dao.SkillDao;
 import com.jobseek.dao.UserDao;
+import com.jobseek.dto.*;
+import com.jobseek.entity.*;
 import com.jobseek.dto.CandidateProfileDto;
 import com.jobseek.dto.CandidateReqDto;
 import com.jobseek.dto.CandidateRespDto;
@@ -34,6 +37,7 @@ public class CandidateServiceImpl implements CandidateService {
     public final UserDao userDao;
     public final ModelMapper modelMapper;
     public final SkillDao skillDao;
+    public final JobApplicationDao jobApplicationDao;
 
     @Override
     public CandidateRespDto createCandidate(CandidateReqDto candidateReqDto, long userId) {
@@ -60,8 +64,20 @@ public class CandidateServiceImpl implements CandidateService {
         candidate.getExperienceList();
         candidate.getEducationList();
         candidate.getCskills();
-        return modelMapper.map(candidate, CandidateProfileDto.class);
+        return modelMapper.map(candidate,CandidateProfileDto.class);
     }
+
+    @Override
+    public List<JobRespDto> getAppliedJobs(Long userId) {
+        Candidate candidate = candidateDao.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Candidate not found"));
+        return candidate.getApplications()
+                .stream()
+                .map(JobApplication::getJob)
+                .map(job-> modelMapper.map(job, JobRespDto.class))
+                .toList();
+    }
+
 
     @Override
     public List<CandidateRespDto> searchCandidatesBySkill(String skillName) {

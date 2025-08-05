@@ -4,11 +4,10 @@ import com.jobseek.dao.JobDao;
 import com.jobseek.dao.RecruiterDao;
 import com.jobseek.dao.SkillDao;
 import com.jobseek.dto.ApiResponse;
+import com.jobseek.dto.CandidateProfileDto;
 import com.jobseek.dto.JobReqDto;
 import com.jobseek.dto.JobRespDto;
-import com.jobseek.entity.Job;
-import com.jobseek.entity.Recruiter;
-import com.jobseek.entity.Skill;
+import com.jobseek.entity.*;
 import com.jobseek.exception.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -30,13 +29,14 @@ public class JobServiceImpl implements JobService {
     private final ModelMapper modelMapper;
     private final RecruiterDao recruiterDao;
     private final SkillDao skillDao;
+    private final CandidateService candidateService;
 
     @Override
     public List<JobRespDto> getAllJobs() {
         List<Job> jobList = Optional.of(jobDao.findAll())
                 .filter(jobs -> !jobs.isEmpty())
                 .orElseThrow(() -> new ResourceNotFoundException("No jobs yet registered"));
-                return jobList
+        return jobList
                 .stream()
                 .filter(Job::isActive)
                 .map(jobs -> modelMapper.map(jobs,JobRespDto.class))
@@ -47,7 +47,7 @@ public class JobServiceImpl implements JobService {
     public List<JobRespDto> getAllJobs(Long userId) {
         Recruiter recruiter = recruiterDao.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("No jobs yet registered"));
-        List<Job> jobList = Optional.of(jobDao.findAllByRecruiterUserId(userId))
+        List<Job> jobList = Optional.of(jobDao.findAllByRecruiterUserIdAndIsActiveTrue(userId))
                 .filter(jobs -> !jobs.isEmpty())
                 .orElseThrow(() -> new ResourceNotFoundException("No jobs yet registered"));
 
@@ -86,6 +86,17 @@ public class JobServiceImpl implements JobService {
         job.setActive(false);
         jobDao.save(job);
         return new ApiResponse("Job Deleted");
+    }
+
+    @Override
+    public List<CandidateProfileDto> getJobApplications(Long jobId) {
+        return jobDao.findById(jobId)
+                .orElseThrow(() -> new ResourceNotFoundException("Skill not found with id "))
+                .getApplications()
+                .stream()
+                .map(JobApplication::getCandidate)
+                .map(candidate ->candidateService.getCandidateProfile(candidate.getUserId()))
+                .toList();
     }
 
     @Override

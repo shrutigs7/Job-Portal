@@ -1,6 +1,7 @@
 package com.jobseek.service;
 
 import com.jobseek.dto.ApiResponse;
+import com.jobseek.dto.CandidateProfileDto;
 import com.jobseek.dto.JobReqDto;
 import com.jobseek.dto.JobRespDto;
 import com.jobseek.entity.Job;
@@ -18,6 +19,8 @@ public interface JobService {
     JobRespDto updateJob(Long jobId, JobReqDto jobReqDto);
 
     ApiResponse deleteJob(Long jobId);
+
+    List<CandidateProfileDto> getJobApplications(Long jobId);
 
     List<Job> searchJobsBySkillName(String skillName);
 

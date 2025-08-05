@@ -12,12 +12,10 @@ import com.jobseek.entity.JobApplication;
 import com.jobseek.exception.DuplicateResourceException;
 import com.jobseek.exception.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Service
 @Transactional
@@ -46,7 +44,18 @@ public class JobApplicationServiceImpl implements JobApplicationService {
         application.setAppliedDate(LocalDate.now());
         application.setStatus(ApplicationStatus.APPLIED);
         jobApplicationDao.save(application);
-        return new ApiResponse("Job Applied Successfullly");
+        return new ApiResponse("Job Applied successfully");
+    }
+
+    @Override
+    public ApiResponse updateApplicationStatus(JobApplicationDto jobApplicationDto) {
+//        JobApplication application = jobApplicationDao.findByJobIdAndUserId
+        JobApplication application = jobApplicationDao.findByJob_JobIdAndCandidate_UserId
+                        (jobApplicationDto.getJobId(),jobApplicationDto.getUserId())
+                .orElseThrow(() -> new ResourceNotFoundException("Job application not found for given jobId and userId"));
+        application.setStatus(jobApplicationDto.getStatus());
+        jobApplicationDao.save(application);
+        return new ApiResponse("Job status updated successfully");
     }
 //
 //    @Override
