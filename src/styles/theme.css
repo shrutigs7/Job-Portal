@@ -1,0 +1,11 @@
+:root {
+  --bs-primary: #4285f4;
+  --bs-primary-rgb: 66, 133, 244; /* RGB for #4285f4 */
+  --bs-body-bg: #ffffff;
+  --bs-body-color: #212529;
+}
+
+body {
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+}
