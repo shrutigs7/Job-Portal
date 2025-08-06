@@ -1,6 +1,7 @@
 package com.jobseek.dao;
 
 import com.jobseek.entity.Candidate;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,4 +15,10 @@ public interface CandidateDao extends JpaRepository<Candidate, Long> {
     List<Candidate> findCandidatesBySkillName(String skillName);
 
 
+    @EntityGraph(attributePaths = {
+            "applications",
+            "applications.job",
+            "applications.job.jskills"
+    })
+    Optional<Candidate> findById(Long userId);
 }

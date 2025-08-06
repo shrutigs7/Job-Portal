@@ -44,6 +44,13 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
+    public JobRespDto getJob(long jobId) {
+        return jobDao.findById(jobId)
+                .map(job -> modelMapper.map(job,JobRespDto.class))
+                .orElseThrow(() -> new ResourceNotFoundException("No jobs by this id "));
+    }
+
+    @Override
     public List<JobRespDto> getAllJobs(Long userId) {
         Recruiter recruiter = recruiterDao.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("No jobs yet registered"));

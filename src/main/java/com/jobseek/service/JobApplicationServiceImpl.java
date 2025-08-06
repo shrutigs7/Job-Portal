@@ -57,6 +57,14 @@ public class JobApplicationServiceImpl implements JobApplicationService {
         jobApplicationDao.save(application);
         return new ApiResponse("Job status updated successfully");
     }
+
+    @Override
+    public String getApplicationStatus(JobApplicationDto jobApplicationDto) {
+        JobApplication application = jobApplicationDao.findByJob_JobIdAndCandidate_UserId
+                (jobApplicationDto.getJobId(),jobApplicationDto.getUserId())
+                .orElseThrow(() -> new ResourceNotFoundException("Job application not found for given jobId and userId"));
+        return application.getStatus().toString();
+    }
 //
 //    @Override
 //    public List<Job> getAppliedJobs(Long userId) {

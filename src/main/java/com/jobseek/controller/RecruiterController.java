@@ -23,48 +23,66 @@ public class RecruiterController {
     public final JobApplicationService jobApplicationService;
     public final CandidateService candidateService;
 
-    @PostMapping("/add")
-    public ResponseEntity<?> addRecruiter(@RequestParam long userId, @RequestBody RecruiterReqDto recruiterReqDto){
+    //add recruiter
+    @PostMapping("/add/{userId}")
+    public ResponseEntity<?> addRecruiter(@PathVariable long userId, @RequestBody RecruiterReqDto recruiterReqDto){
         return ResponseEntity.ok(recruiterService.addRecruiter(userId,recruiterReqDto));
     }
-
+    //get Recruiter profile
     @GetMapping("/profile/{userId}")
     public ResponseEntity<?> getRecruiterProfile(@PathVariable long userId){
 //        return ResponseEntity.ok(recruiterService.getRecruiterProfile(userId));
         return ResponseEntity.ok(userService.getUser(userId));
     }
 
+    //get job
+    @GetMapping("/job/{jobId}")
+    public ResponseEntity<?> getJob(@PathVariable long jobId){
+        return ResponseEntity.ok(jobService.getJob(jobId));
+    }
+
+    //add new job
     @PostMapping("/job/{userId}")
     public ResponseEntity<?> addJob(@PathVariable long userId, @RequestBody JobReqDto jobReqDto){
         return ResponseEntity.ok(jobService.addJob(userId,jobReqDto));
     }
 
+    //update job
     @PutMapping("/job/{jobId}")
     public ResponseEntity<?> updateJob(@PathVariable long jobId, @RequestBody JobReqDto jobReqDto){
         return ResponseEntity.ok(jobService.updateJob(jobId,jobReqDto));
     }
 
+
+    //delete job
     @DeleteMapping("/job/{jobId}")
     public ResponseEntity<?> deleteJob(@PathVariable long jobId){
         return ResponseEntity.ok(jobService.deleteJob(jobId));
     }
 
+    //get all jobs
     @GetMapping("/jobs/{userId}")
     public ResponseEntity<?> getPostedJobs(@PathVariable long userId){
         return ResponseEntity.ok(jobService.getAllJobs(userId));
     }
 
-    @GetMapping("/job/{jobId}")
+    //get all application to the job
+    @GetMapping("/job/application/{jobId}")
     public ResponseEntity<?> getCandidateApplications(@PathVariable long jobId){
         return ResponseEntity.ok(jobService.getJobApplications(jobId));
     }
 
-    @PutMapping("/job/status")
+    @PostMapping("/job/application/status")
+    public ResponseEntity<?> getJobApplicationStatus(@RequestBody JobApplicationDto jobApplicationDto){
+        return ResponseEntity.ok(jobApplicationService.getApplicationStatus(jobApplicationDto));
+    }
+
+    @PutMapping("/job/application/status")
     public ResponseEntity<?> updateJobApplicationStatus(@RequestBody JobApplicationDto jobApplicationDto){
         return ResponseEntity.ok(jobApplicationService.updateApplicationStatus(jobApplicationDto));
     }
 
-    @GetMapping("/candidates/search")
+    @GetMapping("/candidates/skill")
     public ResponseEntity<?> searchCandidatesBySkill(@RequestParam String skill) {
         return ResponseEntity.ok(candidateService.searchCandidatesBySkill(skill));
     }

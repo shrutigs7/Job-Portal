@@ -16,7 +16,6 @@ public class JobportalApplication {
 		SpringApplication.run(JobportalApplication.class, args);
 	}
 
-
 	@Bean //method level annotation - to tell SC , following method
 	//rets an object  - which has to be managed as a spring bean
 	//manages - life cycle +

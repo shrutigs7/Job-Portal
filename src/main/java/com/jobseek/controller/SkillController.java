@@ -14,8 +14,9 @@ public class SkillController {
 
     public final SkillService skillService;
 
-    @GetMapping("/")
+    @GetMapping("/get")
     public ResponseEntity<?> getAllSkills(){
         return ResponseEntity.ok(skillService.getAllSkills());
     }
+
 }

@@ -25,11 +25,11 @@ public class Skill {
    @Column(name = "skill_name")
    private String skillName;
 
-   @ManyToMany(mappedBy = "jskills")
+   @ManyToMany(mappedBy = "jskills", fetch = FetchType.LAZY)
    @JsonIgnore
    private Set<Job> jobs = new HashSet<>();
 
-   @ManyToMany(mappedBy = "cskills")
+   @ManyToMany(mappedBy = "cskills", fetch = FetchType.LAZY)
    @JsonIgnore
    private Set<Candidate> candidates = new HashSet<>();
 

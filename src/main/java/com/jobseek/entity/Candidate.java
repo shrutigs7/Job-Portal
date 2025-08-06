@@ -52,7 +52,7 @@ public class Candidate {
     @JoinColumn(name = "user_id")
     private List<Experience> experienceList = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinTable(
             name = "candidate_skill",
             joinColumns = @JoinColumn(name = "user_id"),

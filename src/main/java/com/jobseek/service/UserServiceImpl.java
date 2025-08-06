@@ -7,6 +7,7 @@ import com.jobseek.dto.*;
 import com.jobseek.entity.Company;
 import com.jobseek.entity.Recruiter;
 import com.jobseek.entity.User;
+import com.jobseek.exception.DuplicateResourceException;
 import com.jobseek.exception.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -40,6 +41,9 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserResponseDto addUser(SignUpDto signUpDto) {
+        User user1 = userDao.findByEmail(signUpDto.getEmail());
+        if(user1 != null)
+            throw new DuplicateResourceException("user already exists");
         User user = modelMapper.map(signUpDto,User.class);
         return modelMapper.map(userDao.save(user),UserResponseDto.class);
     }

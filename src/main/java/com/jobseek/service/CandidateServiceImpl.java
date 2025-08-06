@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -71,12 +72,74 @@ public class CandidateServiceImpl implements CandidateService {
     public List<JobRespDto> getAppliedJobs(Long userId) {
         Candidate candidate = candidateDao.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Candidate not found"));
-        return candidate.getApplications()
-                .stream()
-                .map(JobApplication::getJob)
-                .map(job-> modelMapper.map(job, JobRespDto.class))
-                .toList();
+
+
+        List<Job> jobs = new ArrayList<>();
+
+        for (JobApplication application : candidate.getApplications()) {
+            jobs.add(application.getJob());
+        }
+
+        List<JobRespDto> result = new ArrayList<>();
+        for(Job job : jobs){
+            JobRespDto dto = new JobRespDto();
+            dto.setJobId(job.getJobId());
+            dto.setTitle(job.getTitle());
+            dto.setCompanyName(job.getCompanyName());
+            dto.setYearOfExperience(job.getYearOfExperience());
+            dto.setType(job.getType());
+            dto.setDescription(job.getDescription());
+            dto.setLocation(job.getLocation());
+            Set<Skill> jskills = job.getJskills();
+
+            for(Skill skill: jskills){
+                SkillDto skillDto = new SkillDto(skill.getSkillId(),skill.getSkillName());
+                dto.getJskills().add(skillDto);
+            }
+            result.add(dto);
+        }
+        return result;
     }
+
+//            JobRespDto dto = new JobRespDto();
+//            dto.setJobId(job.getJobId());
+//            dto.setTitle(job.getTitle());
+//            dto.setCompanyName(job.getCompanyName());
+//            dto.setYearOfExperience(job.getYearOfExperience());
+//            dto.setType(job.getType());
+//            dto.setDescription(job.getDescription());
+//            dto.setLocation(job.getLocation());
+//            dto.setPostedDate(job.getPostedDate());
+//
+//            // Convert skills manually to SkillDto
+//            Set<SkillDto> skillDtos = job.getJskills().stream()
+//                    .map(skill -> {
+//                        SkillDto skillDto = new SkillDto();
+//                        skillDto.setSkillId(skill.getSkillId());
+//                        skillDto.setSkillName(skill.getSkillName());
+//                        return skillDto;
+//                    })
+//                    .collect(Collectors.toSet());
+//
+//            dto.setJskills(skillDtos);
+//
+//            result.add(dto);
+//        }
+//
+//        return result;
+//    }
+
+//    @Override
+//    public List<JobRespDto> getAppliedJobs(Long userId) {
+//        Candidate candidate = candidateDao.findWithApplicationsAndJobsAndSkills(userId)
+//                .orElseThrow(() -> new ResourceNotFoundException("Candidate not found"));
+//
+//        return candidate.getApplications()
+//                .stream()
+//                .map(JobApplication::getJob)
+//                .map(job -> modelMapper.map(job, JobRespDto.class))
+//                .toList();
+//    }
 
 
     @Override
