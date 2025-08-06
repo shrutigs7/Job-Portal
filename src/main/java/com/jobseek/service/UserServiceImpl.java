@@ -11,6 +11,7 @@ import com.jobseek.exception.DuplicateResourceException;
 import com.jobseek.exception.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +30,7 @@ public class UserServiceImpl implements UserService{
     public final ModelMapper modelMapper;
     public final CandidateService candidateService;
     public final RecruiterService recruiterService;
-
+    public final BCryptPasswordEncoder passwordEncoder;
     @Override
     public List<User> getAllUsers() {
 
@@ -44,7 +45,10 @@ public class UserServiceImpl implements UserService{
         User user1 = userDao.findByEmail(signUpDto.getEmail());
         if(user1 != null)
             throw new DuplicateResourceException("user already exists");
-        User user = modelMapper.map(signUpDto,User.class);
+        User user = new User();
+        user.setEmail(signUpDto.getEmail());
+        user.setPassword(passwordEncoder.encode(signUpDto.getPassword())); // ✅ Encrypt!
+        user.setRole(signUpDto.getRole());
         return modelMapper.map(userDao.save(user),UserResponseDto.class);
     }
 

@@ -15,7 +15,5 @@ public class UserResponseDto {
     private String password;
     private String email;
     private Role role;
-//    private Candidate candidate;
-//    private Admin admin;
-//    private Recruiter recruiter;
+
 }

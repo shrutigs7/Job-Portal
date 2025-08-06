@@ -16,5 +16,5 @@ public interface UserService {
 
     UserDetailsDto getUser(Long userId);
 
-    UserResponseDto addUser(SignUpDto signUpDto);
+    UserDetailsDto addUser(SignUpDto signUpDto);
 }

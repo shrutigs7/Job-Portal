@@ -206,4 +206,4 @@ public class CandidateServiceImpl implements CandidateService {
         dto.setGitHub(candidate.getGitHub());
         return dto;
     }
-}
+}       
