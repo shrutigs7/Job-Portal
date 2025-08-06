@@ -23,6 +23,7 @@ import CandidateSkills from '../components/candidate/CandidateSkills';
 import ViewApplications from '../components/candidate/ViewApplications';
 import SearchJobs from '../components/candidate/SearchJobs';
 import CandidateProfile from '../components/candidate/CandidateProfile';
+import UpdateCandidatePersonalInfo from '../components/candidate/UpdateCandidatePersonalInfo';
 
 import Signup from '../pages/SignUp';
 
@@ -59,7 +60,11 @@ function AppRoutes() {
             <Route path="/candidate" element={<CandidateDashboard />} >
                 <Route path="view-applications" element={<ViewApplications />} />
                 <Route path="search-jobs" element={<SearchJobs />} />
-                <Route path="profile" element={<CandidateProfile />} />
+                <Route path="profile" element={<CandidateProfile />}  />
+                <Route path="update/personal" element={<UpdateCandidatePersonalInfo />} />
+                <Route path="update/education" element={<CandidateEducation />} />
+                <Route path="update/experience" element={<CandidateExperience />} />
+            
             </Route>
 
 

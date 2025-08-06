@@ -18,7 +18,7 @@ const ViewApplications = () => {
 
         // 2. Fetch status for each job
         jobList.forEach(job => {
-          axios.post('http://localhost:8081/candidate//job/application/status', {
+          axios.post('http://localhost:8081/candidate/job/application/status', {
             userId: user.userId,
             jobId: job.jobId
           })
