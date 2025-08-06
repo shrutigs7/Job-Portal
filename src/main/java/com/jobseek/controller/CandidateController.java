@@ -62,6 +62,11 @@ public class CandidateController {
         return ResponseEntity.ok(jobApplicationService.addJobApplication(jobApplicationDto));
     }
 
+    @PostMapping("/job/status")
+    public ResponseEntity<?> getJobApplicationStatus(@RequestBody JobApplicationDto jobApplicationDto){
+        return ResponseEntity.ok(jobApplicationService.getApplicationStatus(jobApplicationDto));
+    }
+
     @GetMapping("/job/{userId}")
     public ResponseEntity<?> getAppliedJobs(@PathVariable Long userId){
         return ResponseEntity.ok(candidateService.getAppliedJobs(userId));
@@ -86,14 +91,6 @@ public class CandidateController {
     }
 
 
-//    @GetMapping
-//    public ResponseEntity<List<CandidateRespDto>> getAllCandidates() {
-//        return ResponseEntity.ok(candidateService.getAllCandidates());
-//    }
-//
-//    @PutMapping("/{userId}")
-//    public ResponseEntity<CandidateRespDto> updateCandidate(@PathVariable long userId, @RequestBody CandidateReqDto dto) {
-//        return ResponseEntity.ok(candidateService.updateCandidate(userId, dto));
-//    }
+
 
 }
