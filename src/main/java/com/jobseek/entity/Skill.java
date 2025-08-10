@@ -1,6 +1,7 @@
 package com.jobseek.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,6 +26,7 @@ public class Skill {
    @Column(name = "skill_name")
    private String skillName;
 
+   @JsonManagedReference
    @ManyToMany(mappedBy = "jskills", fetch = FetchType.LAZY)
    @JsonIgnore
    private Set<Job> jobs = new HashSet<>();

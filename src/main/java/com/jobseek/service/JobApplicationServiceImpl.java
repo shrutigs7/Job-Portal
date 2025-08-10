@@ -60,10 +60,9 @@ public class JobApplicationServiceImpl implements JobApplicationService {
 
     @Override
     public String getApplicationStatus(JobApplicationDto jobApplicationDto) {
-        JobApplication application = jobApplicationDao.findByJob_JobIdAndCandidate_UserId
+        return jobApplicationDao.findStatusByCandidateIdAndJobId
                 (jobApplicationDto.getJobId(),jobApplicationDto.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("Job application not found for given jobId and userId"));
-        return application.getStatus().toString();
     }
 //
 //    @Override

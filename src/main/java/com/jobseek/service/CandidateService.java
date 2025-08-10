@@ -23,21 +23,5 @@ public interface CandidateService {
 
     CandidateRespDto updateCandidateProfile(long userId, CandidateReqDto dto);
 
-
-
-//    CandidateRespDto updateCandidate(long userId, CandidateReqDto dto);
-//
-//    CandidateRespDto getCandidateById(long userId);
-//
-//    List<CandidateRespDto> getAllCandidates();
-//
-//    void deleteCandidate(long userId);
-//
-//    CandidateRespDto getCandidateByMobileNo(String mobileNo);
-//
-//    CandidateRespDto getCandidateByLinkedIn(String linkedIn);
-//
-//    CandidateRespDto getCandidateByGitHub(String gitHub);
-//
-//    List<CandidateRespDto> searchCandidatesByName(String name);
+    List<CandidateRespDto> getAllCandidates();
 }

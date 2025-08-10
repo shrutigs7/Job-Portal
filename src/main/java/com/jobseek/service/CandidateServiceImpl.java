@@ -196,6 +196,28 @@ public class CandidateServiceImpl implements CandidateService {
         return mapToResponseDto(updatedCandidate);
     }
 
+    @Override
+    public List<CandidateRespDto> getAllCandidates() {
+        List<Candidate> candidates = candidateDao.findAll();
+        List<CandidateRespDto> result = new ArrayList<>();
+        for(Candidate can : candidates){
+            CandidateRespDto resp = new CandidateRespDto();
+            resp.setName(can.getName());
+            resp.setUserId(can.getUserId());
+            resp.setDateOfBirth(can.getDateOfBirth());
+            resp.setMobileNo(can.getMobileNo());
+            resp.setLinkedIn(can.getLinkedIn());
+            resp.setGitHub(can.getGitHub());
+            Set<String> skills = new HashSet<>();
+            for(Skill skill : can.getCskills()){
+                skills.add(skill.getSkillName());
+            }
+            resp.setSkills(skills);
+            result.add(resp);
+        }
+        return result;
+    }
+
     private CandidateRespDto mapToResponseDto(Candidate candidate) {
         CandidateRespDto dto = new CandidateRespDto();
         dto.setUserId(candidate.getUserId());
