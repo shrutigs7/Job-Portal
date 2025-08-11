@@ -37,8 +37,11 @@ public class UserController {
         // 2. Generate JWT from authenticated principal (e.g. email/username)
         String token = jwtUtils.generateJwtToken(authResult);
 
+        Long userId = userService.getUserByEmail(signInDto.getEmail())
+                .getUserId();
+
         // 3. Return token (for example, in body via an AuthResp DTO)
-        return ResponseEntity.ok(new AuthResponse("Login successful", token));
+        return ResponseEntity.ok(new AuthResponse(userId.toString(), token));
     }
 
     @PostMapping("/signup")

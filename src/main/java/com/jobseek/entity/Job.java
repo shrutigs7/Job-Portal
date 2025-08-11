@@ -1,6 +1,7 @@
 package com.jobseek.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -49,6 +50,7 @@ public class Job {
     @JsonIgnore
     private Recruiter recruiter;
 
+    @JsonManagedReference
     @ManyToMany
     @JoinTable(
             name = "job_skill",

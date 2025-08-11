@@ -82,6 +82,18 @@ public class RecruiterController {
         return ResponseEntity.ok(jobApplicationService.updateApplicationStatus(jobApplicationDto));
     }
 
+
+    @GetMapping("/candidates")
+    public ResponseEntity<?> getAllCandidates() {
+        return ResponseEntity.ok(candidateService.getAllCandidates());
+    }
+
+    @GetMapping("/candidate/{userId}")
+    public ResponseEntity<?> getCandidateProfile(@PathVariable long userId) {
+//        return ResponseEntity.ok(candidateService.getCandidateProfile(userId));
+        return ResponseEntity.ok(userService.getUser(userId));
+    }
+
     @GetMapping("/candidates/skill")
     public ResponseEntity<?> searchCandidatesBySkill(@RequestParam String skill) {
         return ResponseEntity.ok(candidateService.searchCandidatesBySkill(skill));

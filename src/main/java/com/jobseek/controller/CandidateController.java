@@ -57,6 +57,12 @@ public class CandidateController {
         return ResponseEntity.ok(userService.getUser(userId));
     }
 
+    @GetMapping("/jobs")
+    public ResponseEntity<?> getJobs() {
+        return ResponseEntity.ok(jobService.getAllJobs());
+    }
+
+
     @PostMapping("/job")
     public ResponseEntity<?> applyForJob(@RequestBody JobApplicationDto jobApplicationDto){
         return ResponseEntity.ok(jobApplicationService.addJobApplication(jobApplicationDto));

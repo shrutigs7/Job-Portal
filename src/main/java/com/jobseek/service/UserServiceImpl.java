@@ -42,15 +42,21 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDetailsDto addUser(SignUpDto signUpDto) {
-        User user1 = userDao.findByEmail(signUpDto.getEmail())
-            .orElseThrow(() -> new ResourceNotFoundException("No users registered"));
-        if(user1 != null)
-            throw new DuplicateResourceException("user already exists");
+//        User user1 = userDao.findByEmail(signUpDto.getEmail()).get();
+//        if(user1 != null)
+//            throw new DuplicateResourceException("user already exists");
         User user = new User();
         user.setEmail(signUpDto.getEmail());
-        user.setPassword(passwordEncoder.encode(signUpDto.getPassword())); // ✅ Encrypt!
+        user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
         user.setRole(signUpDto.getRole());
         return modelMapper.map(userDao.save(user),UserDetailsDto.class);
+    }
+
+    @Override
+    public UserDetailsDto getUserByEmail(String email) {
+        User user = userDao.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User Not found"));
+        return modelMapper.map(user,UserDetailsDto.class);
     }
 
     @Override
