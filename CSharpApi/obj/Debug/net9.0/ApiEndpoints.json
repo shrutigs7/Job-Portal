@@ -1,0 +1,18 @@
+[
+  {
+    "ContainingType": "CSharpApi.Controllers.ResumeController",
+    "Method": "Generate",
+    "RelativePath": "api/Resume/generate",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "profile",
+        "Type": "CSharpApi.Model.CandidateProfileDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
